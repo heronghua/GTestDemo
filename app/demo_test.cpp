@@ -15,7 +15,7 @@ TEST(MathTest,Addition)
 
 TEST(AndroidLogTest,Output)
 {
-    __android_log_print(ANDROID_LOG_INGO,"GTest","Running Android test");
+    __android_log_print(ANDROID_LOG_INFO,"GTest","Running Android test");
     EXPECT_TRUE(true);
 }
 

@@ -1,6 +1,6 @@
 add_executable(demo_test demo_test.cpp)
 
-target_link_library(demo_test 
+target_link_libraries(demo_test 
         PRIVATE
         gtest
         gtest_main

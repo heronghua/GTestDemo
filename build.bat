@@ -6,6 +6,7 @@ REM user config parameters
 REM=============================================
 set "CMAKE_PATH=C:\cygwin64\bin\cmake.exe"
 set "NDK_HOME=C:\Program Files\android-ndk-r27d"
+set "PATH=%NDK_HOME%\..\..\cmake\3.22.1\bin;%PATH%"
 
 set "ABI=arm64-v8a"
 set "API_LEVEL=21"
@@ -63,6 +64,7 @@ echo.
 pushd "%BUILD_DIR%"
 
 "%CMAKE_PATH%" -G "Ninja" ^
+        -DCMAKE_MAKE_PROGRAM="ninja.exe" ^
         -DCMAKE_TOOLCHAIN_FILE="%NDK_HOME%\build\cmake\android.toolchain.cmake" ^
         -DANDROID_NDK="%NDK_HOME%" ^
         -DCMAKE_C_COMPILER="%TOOLCHAIN%/bin/clang.exe" ^
@@ -96,21 +98,11 @@ if %errorlevel% neq 0 (
         exit /b 1
 )
 
-
-echo============================================
-echo copy test project into project root directory
-echo============================================
-set "TEST_EXE=%BUILD_DIR%\bin\demo_test.exe"
-if exist "%TEST_EXE%" (
-        copy "%TEST_EXE%" "%PROJECT_DIR%demo_test.exe"> nul
-        echo test programe already copy to : "%PROJECT_DIR%demo_test.exe"
-)
-
 echo.
 echo============================================
 echo compile success !
 echo============================================
-echo test program location: %BUID_DIR%\bin\demo_test.exe
+echo test program location: %BUID_DIR%\bin\demo_test
 echo.
 
 popd
@@ -119,7 +111,7 @@ REM=============================================
 REM push to device command
 REM=============================================
 echo push to device command:
-echo adb push "%BUILD_DIR%\bin\demo_test.exe" /data/local/tmp/demo_test
+echo adb push "%BUILD_DIR%\bin\demo_test" /data/local/tmp/demo_test
 echo adb shell "cd /data/local/tmp && chmod +x demo_test && ./demo_test"
 echo.
 
